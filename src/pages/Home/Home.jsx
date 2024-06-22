@@ -3,7 +3,7 @@ import "./Home.css";
 import { CoinContext } from "../../context/CoinContext";
 
 const Home = () => {
-  const { allCoin, currency } = useContext(CoinContext);
+  const { allCoin = [], currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState([]);
   useEffect(() => {
     setDisplayCoin(allCoin);
@@ -41,7 +41,11 @@ const Home = () => {
             <p>
               {currency.symbol} {item.current_price.toLocaleString()}
             </p>
-            <p>{Math.floor(item.price_change_percentage_24h * 100) / 100}</p>
+            <p
+              className={item.price_change_percentage_24h > 0 ? "green" : "red"}
+            >
+              {Math.floor(item.price_change_percentage_24h * 100) / 100}
+            </p>
             <p className="market-cap">
               {currency.symbol}
               {item.market_cap.toLocaleString()}
